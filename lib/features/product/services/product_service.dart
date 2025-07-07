@@ -20,4 +20,18 @@ class ProductService {
       rethrow;
     }
   }
+
+  Future<Product?> fetchProduct({
+    required int productId,
+  }) async {
+    try {
+      final res = await apiService.get(
+        URL.productById(productId),
+        fromJsonT: (json) => Product.fromJson(json),
+      );
+      return res.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

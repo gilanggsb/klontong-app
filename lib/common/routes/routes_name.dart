@@ -1,5 +1,5 @@
 enum RouteName {
-  productDetail('Product Detail', 'detail'),
+  productDetail('Product Detail', '/products/:product_id'),
   products('Products', '/products'),
   splash('Splash', '/');
 

@@ -7,4 +7,5 @@ class URL {
   static String base = Env.baseUrl;
 
   static String products = "$base/products";
+  static String productById(int productId) => "$base/products/$productId";
 }

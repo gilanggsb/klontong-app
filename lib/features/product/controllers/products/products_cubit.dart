@@ -11,8 +11,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   final ProductService productService;
   late ScrollController? scrollController;
 
-  ProductsCubit({required this.productService})
-    : super(ProductsState.initial()) {
+  ProductsCubit({required this.productService}) : super(ProductsState.initial()) {
     scrollController = ScrollController();
   }
 
@@ -21,19 +20,13 @@ class ProductsCubit extends Cubit<ProductsState> {
   bool isLoading = false;
   bool isScrollControllerInitialized = false;
 
-  PaginationParams paginationParams = PaginationParams(
-    limit: 10,
-    offset: 0,
-    searchKey: '',
-  );
+  PaginationParams paginationParams = PaginationParams(limit: 10, offset: 0, searchKey: '');
 
   void init() async {
     initScrollController();
     AppUtils.handleBlocState(
       action: () async {
-        final res = await productService.fetchProducts(
-          paginationParams: paginationParams,
-        );
+        final res = await productService.fetchProducts(paginationParams: paginationParams);
 
         if (res == null) return;
 
@@ -48,16 +41,16 @@ class ProductsCubit extends Cubit<ProductsState> {
       bloc: this,
       loadingState: () => ProductsState.loading(),
       successState: (data) => ProductsState.loaded(),
-      failureState:
-          (message, {data}) =>
-              ProductsState.failed(message ?? "Unknwon error occurred"),
+      failureState: (message, {data}) => ProductsState.failed(message ?? "Unknwon error occurred"),
     );
   }
 
   void onSearch(String searchKey) {
-    resetState();
-    paginationParams = paginationParams.copyWith(searchKey: searchKey);
-    init();
+    Debouncer.run(() {
+      resetState();
+      paginationParams = paginationParams.copyWith(searchKey: searchKey);
+      init();
+    });
   }
 
   Future<void> onRefresh() async {
@@ -94,13 +87,10 @@ class ProductsCubit extends Cubit<ProductsState> {
     AppUtils.handleBlocState(
       action: () async {
         paginationParams = paginationParams.copyWith(
-          offset:
-              (paginationParams.offset ?? 0) + (paginationParams.limit ?? 0),
+          offset: (paginationParams.offset ?? 0) + (paginationParams.limit ?? 0),
         );
 
-        final res = await productService.fetchProducts(
-          paginationParams: paginationParams,
-        );
+        final res = await productService.fetchProducts(paginationParams: paginationParams);
         if (res == null) return;
 
         if (res.products.isEmpty) {
@@ -115,9 +105,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       bloc: this,
       loadingState: () => ProductsState.fetchingMoreData(),
       successState: (data) => ProductsState.loaded(),
-      failureState:
-          (message, {data}) =>
-              ProductsState.failed(message ?? "Unknwon error occurred"),
+      failureState: (message, {data}) => ProductsState.failed(message ?? "Unknwon error occurred"),
     );
   }
 

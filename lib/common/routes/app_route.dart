@@ -26,6 +26,16 @@ class AppRoute {
         name: RouteName.products.name,
         path: RouteName.products.pathName,
         builder: (context, state) => const ProductsScreen(),
+        routes: [
+          GoRoute(
+            name: RouteName.productDetail.name,
+            path: RouteName.productDetail.pathName,
+            builder: (context, state) {
+              final productId = int.tryParse(state.pathParameters['product_id'] ?? "") ?? 0;
+              return ProductDetailScreen(productId: productId);
+            },
+          ),
+        ],
       ),
     ],
   );
