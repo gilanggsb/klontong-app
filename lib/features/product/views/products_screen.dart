@@ -37,6 +37,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
           }
         },
         child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              NavigationService.pushNamed(RouteName.createProduct);
+            },
+            shape: CircleBorder(),
+            backgroundColor: AppPalette.primaryBase,
+            child: Icon(Icons.add, color: AppPalette.whiteBase),
+          ),
           body: Stack(
             children: [
               // const SizedBox(height: 14),
@@ -98,6 +106,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                   subtitle: Text(product.description ?? "-", maxLines: 2),
                                   leading: CircleAvatar(
                                     radius: 24,
+                                    onBackgroundImageError:
+                                        isLoading
+                                            ? null
+                                            : (exception, stackTrace) => Logger.error(
+                                              "error : can't load product image on ${product.name}",
+                                            ),
                                     backgroundImage:
                                         isLoading ? null : NetworkImage(product.image ?? "-"),
                                   ),

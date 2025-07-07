@@ -16,8 +16,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   void initState() {
-    super.initState();
     productDetailCubit = getIt.get<ProductDetailCubit>()..init(newProductId: widget.productId);
+    super.initState();
   }
 
   @override
@@ -91,7 +91,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               height: context.getHeight * 0.2,
                               child: const Icon(
                                 Icons.error,
-                                color: AppPalette.whiteBase,
+                                color: AppPalette.redBase,
+                                size: 34,
                               ), // Added color to icon
                             ),
                           ),

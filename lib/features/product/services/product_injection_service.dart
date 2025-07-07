@@ -7,6 +7,9 @@ void productInjectionService() {
   getIt.registerFactory<ProductDetailCubit>(
     () => ProductDetailCubit(productService: getIt()),
   );
+  getIt.registerFactory<CreateProductCubit>(
+    () => CreateProductCubit(productService: getIt()),
+  );
   getIt.registerLazySingleton<ProductService>(
     () => ProductService(apiService: getIt()),
   );

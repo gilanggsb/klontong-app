@@ -28,6 +28,11 @@ class AppRoute {
         builder: (context, state) => const ProductsScreen(),
         routes: [
           GoRoute(
+            name: RouteName.createProduct.name,
+            path: RouteName.createProduct.pathName,
+            builder: (context, state) => CreateProductScreen(),
+          ),
+          GoRoute(
             name: RouteName.productDetail.name,
             path: RouteName.productDetail.pathName,
             builder: (context, state) {

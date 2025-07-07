@@ -27,7 +27,7 @@ void main() async {
     ScreenUtil.ensureScreenSize(),
   ]);
 
-  runApp(RequestsInspector(child: MyApp()));
+  runApp(RequestsInspector(hideInspectorBanner: true, child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -44,9 +44,7 @@ class MyApp extends StatelessWidget {
             title: "Klontong Apps",
             theme: ThemeData(primarySwatch: Colors.blue),
             debugShowCheckedModeBanner: false,
-            builder:
-                (context, child) =>
-                    SafeArea(child: LoadingOverlayAlt(child: child!)),
+            builder: (context, child) => SafeArea(child: LoadingOverlayAlt(child: child!)),
           ),
     );
   }

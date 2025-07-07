@@ -22,7 +22,7 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
       },
       emit: emit,
       bloc: this,
-      loadingState: ProductDetailState.loading,
+      loadingState: () => ProductDetailState.loading(),
       successState: (data) => ProductDetailState.loaded(),
       failureState:
           (message, {data}) => ProductDetailState.failed(message ?? "Unknown error occurred"),
